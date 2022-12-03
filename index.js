@@ -1,23 +1,25 @@
 const axios = require("axios");
 const cheerio = require("cheerio");
-const iconv = require('iconv-lite')
 
-axios.defaults.headers.get['content-type'] = 'application/json;charset=UTF-8'
 const getHTML = async (keyword) => {
   try {
 
-    return await axios.get("https://www.musinsa.com/search/musinsa/goods?q=" + encodeURI(keyword), {
-      headers: {
-        'Content-type': 'application/x-www-form-urlencoded; charset=UTF-8',
-      }
-    });
-
-  }
-
-  catch (err) {
+    const resp = await axios.get(
+        "https://www.musinsa.com/search/musinsa/goods?q=" + encodeURI(keyword),
+        {
+            header: {
+                'Accept-Encoding': 'application/json',
+            }
+        }
+    );
+    console.log(JSON.stringify(resp.data, null,4));
+} catch (err) {
     console.log("get HTML error");
   }
 }
+
+getHTML("닥터마틴");
+/*
 const parsing = async (keyword) =>
 {
     const html = await getHTML(keyword);
@@ -27,3 +29,4 @@ const parsing = async (keyword) =>
 }
 
 parsing("닥터마틴");
+*/
